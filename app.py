@@ -84,10 +84,10 @@ class VideoProcessor:
                  res_height: int, 
                  confidence_threshold: float = 0.5, 
                  iou_threshold: float = 0.7, 
-                 diagonal_percentage: float = 0.3,
-                 duration_threshold: int = 10, 
+                 diagonal_percentage: float = 0.4,
+                 duration_threshold: int = 2, 
                  min_cars_in_cluster: int = 5, 
-                 cluster_proximity_multiplier: float = 2,
+                 cluster_proximity_multiplier: float = 3,
                  congestion_respite_time: int = 10):
         self.video_id = video_id
         self.model = YOLO(source_weights_path)
@@ -274,7 +274,7 @@ def process_frame():
             },
             "error": None
         }
-        # print(response)
+        # print(response['data']['video_id'])
         return jsonify(response)
     except Exception as e:
         # Capture and print the full traceback
