@@ -242,7 +242,15 @@ def process_frame():
         file = request.files['frame'].read()
         image = Image.open(io.BytesIO(file))
         video_id = request.form.get('video_id')
-        container_size = json.loads(request.form.get('container_size'))
+        raw_container_size = request.form.get('container_size')
+        if raw_container_size:
+            container_size = json.loads(raw_container_size)
+            # Proceed with using container_size
+        else:
+            # Handle the error, maybe set a default value or return an error response
+            return jsonify({"error": "container_size not provided"}), 400
+        # container_size = json.loads(request.form.get('container_size'))
+        print("Raw container size:", raw_container_size)
         container_width = container_size['width']
         container_height = container_size['height']
 
