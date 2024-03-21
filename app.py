@@ -86,7 +86,7 @@ class VideoProcessor:
                  iou_threshold: float = 0.7, 
                  diagonal_percentage: float = 0.4,
                  duration_threshold: int = 2, 
-                 min_cars_in_cluster: int = 5, 
+                 min_cars_in_cluster: int = 8, 
                  cluster_proximity_multiplier: float = 3,
                  congestion_respite_time: int = 10):
         self.video_id = video_id
@@ -197,7 +197,9 @@ class VideoProcessor:
 
     def check_position_stability(self, detections):
         stable_cars = []
-        frame_diagonal = np.sqrt(self.res_wh[0]**2 + self.res_wh[1]**2)
+        res_width = int(self.res_wh[0])
+        res_height = int(self.res_wh[1])
+        frame_diagonal = np.sqrt(res_width**2 + res_height**2)
         threshold_distance = self.diagonal_percentage * frame_diagonal
         for tracker_id, initial_position in self.initial_positions.items():
             if tracker_id in detections.tracker_id:
@@ -218,7 +220,7 @@ class VideoProcessor:
                     polygon = np.array([[[min_x, min_y], [max_x, min_y], [max_x, max_y], [min_x, max_y]]], dtype=np.int32)
                     frame = cv2.polylines(frame, polygon, isClosed=True, color=bgr_color, thickness=2)
 
-                    print(f"Congestion detected: {len(cluster)} vehicles in cluster")
+                    # print(f"Congestion detected: {len(cluster)} vehicles in cluster")
         return frame, polygon
 
     def calculate_cluster_bounds(self, cluster, detections):
@@ -242,17 +244,12 @@ def process_frame():
         file = request.files['frame'].read()
         image = Image.open(io.BytesIO(file))
         video_id = request.form.get('video_id')
-        raw_container_size = request.form.get('container_size')
-        if raw_container_size:
-            container_size = json.loads(raw_container_size)
-            # Proceed with using container_size
-        else:
-            # Handle the error, maybe set a default value or return an error response
-            return jsonify({"error": "container_size not provided"}), 400
+        container_width = request.form.get('width')
+        container_height = request.form.get('height')
         # container_size = json.loads(request.form.get('container_size'))
-        print("Raw container size:", raw_container_size)
-        container_width = container_size['width']
-        container_height = container_size['height']
+        # print("Raw container size:", raw_container_size)
+        # container_width = container_size['width']
+        # container_height = container_size['height']
 
         # Convert the image for processing
         frame = np.array(image)
