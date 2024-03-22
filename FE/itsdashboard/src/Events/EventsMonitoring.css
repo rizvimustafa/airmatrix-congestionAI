@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+.events-header {
+  display: flex;
+  justify-content: space-between; /* Positions the title and count on opposite ends */
+  align-items: center; /* Vertically centers the items */
+  margin-bottom: 10px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.events-monitoring {
+  /* background-color: #2d2f34; */
+  color: #fff;
+  border-radius: 8px;
+  width: 475px; /* Adjust based on your content */
+  max-height: 600px;
+  border: 1px solid white;
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  padding: 10px;
+  font-size: 16px; /* Updated font size */
+  font-family: 'Roboto', sans-serif; /* Using Roboto font */
+  overflow-y: auto;
+  margin-bottom: 4rem;
+  margin-right: 2rem;
+}
+
+.events-list {
+  max-height: 100px; /* Adjust based on the total height calculation of 4 items */
+  overflow-y: auto; /* This will enable scrolling for the list */
+  display: table;
+  width: 100%;
+}
+
+
+.events-header, .new-events-count, .events-table, .table-row, .table-cell {
+  font-family: 'Roboto', sans-serif; /* Ensure all text elements use Roboto */
+}
+
+.new-events-count {
+  background-color: #ff0000;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 15px;
+  font-size: 0.85em; /* Adjusted for better readability */
+  top: 0;
+  right: 0;
+}
+
+/* Updated styles for the table layout */
+.events-table {
+  display: table;
+  width: 100%; /* Make the table use the full width of its container */
+}
+
+.table-row {
+  display: table-row;
+}
+
+.table-row.header {
+  font-weight: bold;
+  background-color: #41454b; /* Slightly different background for the header */
+}
+
+.table-cell {
+  display: table-cell;
+  padding: 8px; /* Padding inside each cell */
+  border-bottom: 1px solid #fff; /* Visual separation of rows */
+  text-align: left; /* Align text to the left in each cell */
+}
+
+/* Adjust the first column width if needed */
+.table-row > .table-cell:first-child {
+  width: 50px; /* Adjust this width based on your content or remove if not needed */
+}
+
+/* Additional styling for content alignment and visibility */
+.event-description, .event-time {
+  display: flex;
+  align-items: center;
+}
+
+.event-time {
+  justify-content: end;
+}
