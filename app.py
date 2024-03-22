@@ -106,10 +106,13 @@ class VideoProcessor:
         self.congestion_flag = False # Flag to check if congestion is detected
         self.post_congestion_frames = 0 # Duration after congestion is detected
         self.congestion_respite_frames = congestion_respite_time 
+        self.congestion_level = None
+        self.congestion_cluster_size = 0
 
     def process_video(self, frame: np.ndarray):
         processed_frame, polygon, start_congestion_time, stop_congestion_time = self.process_frame(frame)
         # cv2.imshow("frame", processed_frame)
+        self.set_congestion_level()  # Set the congestion level based on cluster size
         return polygon, start_congestion_time, stop_congestion_time, self.congestion_flag
 
     def process_frame(self, frame: np.ndarray):
@@ -150,6 +153,7 @@ class VideoProcessor:
         average_car_size = DetectionUtils.get_average_car_size(detections)
         clusters = DetectionUtils.identify_clusters(detections, average_car_size, self.cluster_proximity_multiplier)
         self.update_cluster_durations(clusters)
+        
 
         return any(len(cluster) >= self.min_cars_in_cluster and all(self.cluster_duration_tracker.get(tracker_id, 0) >= self.duration_threshold for tracker_id in cluster) for cluster in clusters)
 
@@ -220,8 +224,22 @@ class VideoProcessor:
                     polygon = np.array([[[min_x, min_y], [max_x, min_y], [max_x, max_y], [min_x, max_y]]], dtype=np.int32)
                     frame = cv2.polylines(frame, polygon, isClosed=True, color=bgr_color, thickness=2)
 
-                    # print(f"Congestion detected: {len(cluster)} vehicles in cluster")
+                    print(f"Congestion detected: {len(cluster)} vehicles in cluster")
+                    self.congestion_cluster_size = len(cluster)
+        # self.set_congestion_level()  # Set the congestion level based on cluster size
         return frame, polygon
+    
+    def set_congestion_level(self):
+        if self.congestion_flag:
+            # Set congestion level based on the number of cars
+            if 5 <= self.congestion_cluster_size <= 7:
+                self.congestion_level = 'LOW'
+            elif 8 <= self.congestion_cluster_size <= 10:
+                self.congestion_level = 'MEDIUM'
+            elif self.congestion_cluster_size > 10:
+                self.congestion_level = 'HIGH'
+        else:
+            self.congestion_level = None
 
     def calculate_cluster_bounds(self, cluster, detections):
         min_x, min_y, max_x, max_y = float('inf'), float('inf'), 0, 0
@@ -246,10 +264,6 @@ def process_frame():
         video_id = request.form.get('video_id')
         container_width = request.form.get('width')
         container_height = request.form.get('height')
-        # container_size = json.loads(request.form.get('container_size'))
-        # print("Raw container size:", raw_container_size)
-        # container_width = container_size['width']
-        # container_height = container_size['height']
 
         # Convert the image for processing
         frame = np.array(image)
@@ -275,7 +289,8 @@ def process_frame():
                 "congestion_start_time": start_congestion_time.isoformat() if start_congestion_time else None,
                 "congestion_stop_time": stop_congestion_time.isoformat() if stop_congestion_time else None,
                 "bounding_box": polygon.tolist() if polygon is not None else None,
-                "is_congestion": congestion_flag
+                "is_congestion": congestion_flag,
+                "congestion_level": processor.congestion_level
             },
             "error": None
         }
