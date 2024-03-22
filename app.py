@@ -226,7 +226,6 @@ class VideoProcessor:
 
                     print(f"Congestion detected: {len(cluster)} vehicles in cluster")
                     self.congestion_cluster_size = len(cluster)
-        # self.set_congestion_level()  # Set the congestion level based on cluster size
         return frame, polygon
     
     def set_congestion_level(self):
