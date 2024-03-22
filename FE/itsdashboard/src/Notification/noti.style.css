@@ -1,0 +1,54 @@
+
+.noti {
+  background-color: #21252b; /* Changed from transparent for visibility */
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin-left: 16rem;
+  margin-top: 46rem; /* Reduced from 46rem for better accessibility */
+  height: 5rem;
+  width: 60rem;
+  margin-right: 1rem;
+  border-radius: 1rem;
+}
+
+.notiHeading {
+  font-size: 2rem;
+  margin: 0;
+  font-weight: bold;
+  background-color: #21252b;
+  padding-left: 2rem;
+}
+
+.dispatch, .ack {
+  background-color: #21252b;
+  font-weight: 500;
+  font-size: larger;
+  border: none;
+  border-radius: 0.5rem;
+  height: 3rem;
+  width: 9rem;
+}
+
+.dispatch {
+  background-color: red;
+  color: black;
+  margin-right: 1rem; /* Adjust this as needed */
+}
+
+.ack {
+  background-color: green;
+  color: black;
+  margin-right: 2rem; /* Keeps space to the right edge */
+}
+
+.noti-button-group {
+  background-color: #21252b;
+  display: flex;
+  justify-content: flex-end; /* Aligns buttons to the right */
+  align-items: center;
+  gap: 10px; /* Creates space between the buttons */
+}
