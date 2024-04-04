@@ -12,16 +12,6 @@ from fastapi.middleware.cors import CORSMiddleware
 import supervision as sv
 import traceback
 import logging
-from config import (
-    CONFIDENCE_THRESHOLD,
-    IOU_THRESHOLD,
-    DIAGONAL_PERCENTAGE,
-    DURATION_THRESHOLD,
-    MIN_CARS_IN_CLUSTER,
-    CLUSTER_PROXIMITY_MULTIPLIER,
-    CONGESTION_RESPITE_TIME,
-    SOURCE_WEIGHTS_PATH
-)
 
 # Set up logging
 logging.basicConfig(filename='app.log', level=logging.ERROR)
