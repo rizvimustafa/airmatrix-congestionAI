@@ -1,0 +1,19 @@
+<svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon/calendar-days" clip-path="url(#clip0_178_1244)">
+<path id="Vector" d="M12.6667 3.16675H3.33333C2.59695 3.16675 2 3.7637 2 4.50008V13.8334C2 14.5698 2.59695 15.1667 3.33333 15.1667H12.6667C13.403 15.1667 14 14.5698 14 13.8334V4.50008C14 3.7637 13.403 3.16675 12.6667 3.16675Z" stroke="#FAFCFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M10.6667 1.83325V4.49992" stroke="#FAFCFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M5.33325 1.83325V4.49992" stroke="#FAFCFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_4" d="M2 7.16675H14" stroke="#FAFCFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_5" d="M5.33325 9.83325H5.33992" stroke="#FAFCFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_6" d="M8 9.83325H8.00667" stroke="#FAFCFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_7" d="M10.6667 9.83325H10.6734" stroke="#FAFCFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_8" d="M5.33325 12.5H5.33992" stroke="#FAFCFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_9" d="M8 12.5H8.00667" stroke="#FAFCFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_10" d="M10.6667 12.5H10.6734" stroke="#FAFCFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_178_1244">
+<rect width="16" height="16" fill="white" transform="translate(0 0.5)"/>
+</clipPath>
+</defs>
+</svg>

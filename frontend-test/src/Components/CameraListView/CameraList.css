@@ -1,0 +1,170 @@
+.eventBox{
+  background: #151517;
+  height: 88.8%;
+  width: 22%;
+  margin-top: 5rem;
+  margin-left: 3.5rem;
+  border-radius: 1rem;
+  position: fixed;
+  right: 1rem;
+  bottom: 0.8rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #494949;
+  
+}
+
+.heading{
+  background: #151517;
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem 0.9rem
+}
+
+img{
+  background: #151517;
+
+}
+.title{
+  background: #151517;
+  color: white;
+}
+
+.buttons2{
+  display: flex;
+  position: fixed;
+align-items: center;
+gap: 1rem;
+/* padding-left: 2rem;
+margin-top: 1rem; */
+background-color: #151517;
+bottom: 2%;
+right: 5%;
+
+}
+
+.addCamera{
+  display: flex;
+padding: 8px 16px;
+justify-content: center;
+align-items: center;
+/* gap: 10px; */
+border-radius: 6px;
+background: var(--Green-darkmode-accentcolor-001, #39BA25);
+font-size: 0.8rem;
+}
+
+.connectCamera{
+  display: flex;
+  padding: 8px 16px;
+justify-content: center;
+align-items: center;
+/* gap: 10px; */
+color:white;
+border-radius: 6px;
+border: 1px solid #494949;
+background: var(--Black-darkmode-widgetsurface-002, #151517);
+font-size: 0.8rem;
+
+}
+
+.table-container {
+  color: white;
+  border-radius: 8px;
+  margin: auto;
+  background-color: #151517;
+  display: block;
+  height: 75%; /* Adjust this value as needed */
+  overflow-y: auto;
+  width: 85%;
+  border: 1px solid #494949;
+
+}
+
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 16px; 
+  background-color: #151517;
+
+}
+
+.table-body {
+  padding: 16px; 
+  background-color: #151517;
+}
+
+.no-data-message {
+  display: flex; 
+  align-items: center;
+  background-color: #5a5a5a;
+  border-radius: 8px;
+  height: 2rem;
+  gap: 10px;
+  width: 16rem;
+  font-weight: 100;
+  font-size: small;
+  margin-left: 1rem;
+  
+}
+
+
+.camera-header th {
+  font-size: 12px; 
+  text-align: center; 
+  background-color: #151517;
+  border-bottom: 2px solid #494949;
+  height: 2rem;
+
+}
+
+.table-container tr {
+
+  background-color: #151517;
+  font-size: 12px;
+  text-align: center;
+}
+
+.table-container td
+{
+  background-color: #151517;
+}
+
+.table-container thead, .table-container tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* Ensures consistent column widths */
+}
+
+
+.camera-checkbox{
+  width: 10px;
+  height: 10px;
+}
+
+.-Button {
+  background: #b91a1a; /* Using a more neutral color, but feel free to change it */
+  color: white; /* White text color for better contrast */
+  border-radius: 5px; /* Smaller border-radius for a subtler rounded look */
+  padding: 2px 5px; 
+  margin-left: 1rem;
+  font-size: 14px; 
+  cursor: pointer; /* Changes the cursor on hover for better UX */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.-Button:hover {
+  background-color: red; /* Slightly darker shade on hover for feedback */
+}
+
+.header-item{
+  background-color: #151517;
+}
+
+/* .trashimg{
+  border: 1px solid #494949;
+  margin-top: 1rem;
+  margin-top: 2rem;
+ 
+}  */

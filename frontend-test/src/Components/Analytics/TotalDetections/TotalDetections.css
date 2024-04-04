@@ -1,0 +1,22 @@
+.TotalDetectionsDiv{
+  position: fixed;
+  top: 15%;
+  left: 6%;
+  background-color: #151517;
+  border-radius: 8px;
+border: 1px solid #494949;
+padding: 14px;
+
+width: 18.6rem
+}
+
+.TotalDetectionsh3{
+  background-color: #151517;
+}
+
+.TotalDetectionsh1{
+  background-color: #151517;
+}
+.TotalDetectionsh5{
+  background-color: #151517;
+}

@@ -1,0 +1,22 @@
+.DelayTimeDiv{
+  position: fixed;
+  top: 15%;
+  left: 24%;
+  background-color: #151517;
+  border-radius: 8px;
+border: 1px solid #494949;
+/* padding: 0.5rem; */
+padding: 14px;
+width: 18.6rem
+}
+
+.DelayTimeh3{
+  background-color: #151517;
+}
+
+.DelayTimeh1{
+  background-color: #151517;
+}
+.DelayTimeh5{
+  background-color: #151517;
+}

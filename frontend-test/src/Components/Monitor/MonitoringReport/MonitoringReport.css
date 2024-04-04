@@ -1,0 +1,262 @@
+.EntireMonitoringDiv, .MonitoringReportDiv {
+  border: 1px solid #494949;
+  background-color: #151517;
+  border-radius: 0.5rem;
+  position: fixed;
+  top: 10%;
+  left: 5.5%;
+  width: 93.6%;
+  height: 88.5%;
+
+}
+
+.DatepMonitoringList{
+  width: fit-content;
+  height: fit-content;
+  border: 1px solid #494949;
+  background-color: black;
+  border-radius: 0.5rem;
+  position: fixed;
+  padding: 0.6rem;
+  right: 12%;
+  font-size: 0.7rem;
+  top: 10.5%;
+  
+}
+
+.DownloadButtonMonitoringList{
+  background-color: #42bb1d;
+  width: fit-content;
+  font-size: 0.8rem;
+  position: fixed;
+  top: 12%;
+  right: 2%;
+
+}
+
+.DownloadImageMonitoringList{
+  background-color: #42bb1d;
+  padding-right: 0.5rem;
+}
+
+.MonitoringListTableDiv {
+  margin-top: 5%;
+  display: flex;
+  justify-content: center; 
+  background-color: #151517;
+}
+
+.MonitoringListTable {
+  width: 95%;
+  border-collapse: collapse; 
+  table-layout: fixed; 
+  margin: auto; 
+  background-color: #151517;
+  border-radius: 1rem;
+}
+
+.MonitoringListTable th,
+.MonitoringListTable td {
+  text-align:left; 
+  padding: 0.7rem; 
+  background-color: #151517;
+
+}
+
+.MonitoringListTable tr{
+  border: 0.5px solid #494949 ; 
+}
+
+.RowsAndPageNumber{
+
+  display:flex;
+  justify-content: space-between;
+  width: 95%;
+  background-color: #151517;
+  margin-left: 2.8%;
+
+}
+
+.PageNumberAndIcons{
+  display:flex;
+  background-color: #151517;
+
+}
+.rowsSelected{
+  background-color: #151517;
+  color: var(--Grey-darkmode-ghost-001, #9E9E9E);
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.PageNumber{
+  background-color: #151517;
+  margin-right: 1rem;
+  width: 5rem;
+  
+}
+
+.tworights .twolefts .right .left{
+  border: 0.5px solid #494949 ; 
+}
+
+
+.MonitoringListTable tbody tr:hover {
+cursor: pointer; 
+}
+
+
+
+
+
+
+
+.vertical-line {
+width: 0.2rem; 
+height: 27rem;
+background-color: #29292C; 
+margin-top: 1%;
+}
+
+.horizontal-line{
+width: 94%;
+margin-left: 2%;
+height: 0.1rem; 
+background-color: #29292C;
+margin-top: 2%;
+}
+
+.BackButtonAndReportID{
+display: flex;
+width: fit-content;
+align-items: center;
+background-color: #151517;
+}
+
+.reportDetails{
+display: flex;
+width: 45%;
+flex-direction: column;
+align-items: flex-start;
+
+}
+
+
+.reportDetails p{
+background-color: #151517;
+}
+
+.reportDetailsHeader{
+display: flex;
+align-items: center;
+align-self: stretch;
+background-color: #151517;
+color: var(--White-Lightmode-Lightmode-surface-001, #FAFCFF);
+text-align: center;
+font-size: 1.5rem;
+font-style: normal;
+font-weight: 600;
+letter-spacing: -0.225px;
+}
+
+
+.AlertTypeReport, .CameraNumberReport, .DateOfDetectionReport, .TimeOfDetectionReport, .DurationReport, .LocationReport, .Scale{
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-shrink: 0;
+background-color: #151517;
+align-self: stretch;
+}
+
+.ReportDetailsAndImage{
+display: flex;
+justify-content: space-between;
+
+width: 96%;
+  background-color: #151517;
+  margin-left: 2%;
+  margin-top: 2%;
+
+}
+
+.LighterColorP{
+color: var(--Grey-darkmode-ghost-001, #9E9E9E);
+
+font-size: 18px;
+font-style: normal;
+font-weight: 600;
+}
+
+.DarkerP{
+color: var(--White-lightmode-surface-001, #FAFCFF);
+
+font-size: 18px;
+font-style: normal;
+font-weight: 600;
+}
+
+.ReportID{
+color: var(--White-Lightmode-Lightmode-surface-001, #FAFCFF);
+text-align: center;
+font-size: 2.5rem;
+font-style: normal;
+font-weight: 600;
+letter-spacing: -0.225px;
+}
+
+.ReportBackButton{
+width: 2rem;
+height: 2rem;
+}
+
+.ReportDownloadButton{
+width: 2rem;
+height: 2rem;
+margin-right: 2%;
+}
+
+.BackButtonAndReportIDAndDownloadButton{
+display: flex;
+justify-content: space-between;
+align-items: center;
+align-self: stretch;
+background-color: #151517;
+margin-left: 1%;
+}
+
+
+
+.commentBoxReport {
+border: 1px solid #444444; 
+background-color: #151517;
+outline: none; 
+width: 96%;
+margin-left: 2%;
+margin-top: 1%;
+height: 10%;
+display: flex;
+align-items: flex-start;
+border-radius: 1rem;
+}
+
+.commentBox:focus {
+border: 1px solid #007bff; 
+}
+
+.ReportNoteHeader{
+margin-left: 1%;
+margin-top: 1%;
+}
+
+.commentNote{
+color: var(--Grey-darkmode-ghost-001, #9E9E9E);
+
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+background-color: #151517;
+margin-left: 2%;
+}

@@ -1,0 +1,381 @@
+*{
+  background-color: #21252b;
+  overflow-y: hidden;
+  overflow-x: hidden;
+
+}
+
+body {
+
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+.gTNrZz {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #282c34;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: white;
+  font-size: 14px;
+  margin-top: 6.3%;
+  position:fixed;
+  top:0;
+  right:0;
+  border: 1px solid white; 
+  height: fit-content;
+  width: fit-content;
+  margin-right: 2rem;
+}
+
+.Patrols {
+  display: flex;
+  width: 100%;
+  /* max-width: 460px;  */
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  /* border: 1px solid #d80799; */
+  justify-content: center;
+  align-items: center;
+  
+}
+
+tr{
+  font-size: 14px
+}
+tr td {
+  padding-top: 7px;    /* Add space to the top of each cell */
+  padding-bottom: 7px; /* Add space to the bottom of each cell */
+}
+
+th{
+  font-size: 12px;
+}
+
+.Patrols table {
+  border-collapse: separate;
+  border-spacing: 30px 0; /* Adjust the '10px' as needed for your design */
+  
+}
+
+.Headerlist {
+  font-size: 10px;
+}
+
+.xButton:focus{
+  outline: none;
+}
+
+.-Button{
+  background: red;       /* No background */
+  color: inherit;         /* Inherits the color from its parent */
+  border: none;           /* No border */
+  border-radius: 40px;             /* No padding */
+  margin-left: 1px;              /* No margin */
+  font: inherit;          /* Inherits font from its parent */
+  font-size: 10px;
+  cursor: pointer;        /* Cursor appears as a pointer to indicate it's clickable */
+  outline: inherit;       /* Default outline behavior */
+  line-height: normal;    /* Normal line height */
+  overflow: visible;      /* No overflow */
+  text-transform: none;   /* No text capitalization */
+  appearance: none;       /* Removes platform-specific styling */
+  box-shadow: none;       /* No box shadow */
+}
+
+.-Button {
+/* Existing styles */
+transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+.deleteButton:hover {
+background-color: blue  ; /* Darker shade of red on hover */
+}
+
+.xButton{
+    background: red;       /* No background */
+    color: inherit;         /* Inherits the color from its parent */
+    border: none;           /* No border */
+    padding: 0;             /* No padding */
+    margin-left: 4px;              /* No margin */
+    font: inherit;          /* Inherits font from its parent */
+    cursor: pointer;        /* Cursor appears as a pointer to indicate it's clickable */
+    outline: inherit;       /* Default outline behavior */
+    line-height: normal;    /* Normal line height */
+    overflow: visible;      /* No overflow */
+    text-transform: none;   /* No text capitalization */
+    appearance: none;       /* Removes platform-specific styling */
+    box-shadow: none;       /* No box shadow */
+}
+.yButton{
+  background: green;       /* No background */
+  color: inherit;         /* Inherits the color from its parent */
+  border: none;           /* No border */
+  padding: 0;             /* No padding */
+  margin-left: 4px;              /* No margin */
+  font: inherit;          /* Inherits font from its parent */
+  cursor: pointer;        /* Cursor appears as a pointer to indicate it's clickable */
+  outline: inherit;       /* Default outline behavior */
+  line-height: normal;    /* Normal line height */
+  overflow: visible;      /* No overflow */
+  text-transform: none;   /* No text capitalization */
+  appearance: none;       /* Removes platform-specific styling */
+  box-shadow: none;       /* No box shadow */
+}
+.box {
+  background-color: #21252b;
+  border-radius: 15px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  padding: 20px;
+  position: fixed;
+  top: 51%; /* Adjusted from 55% to bring it slightly higher */
+  left: 39.5%; /* Adjusted from 40% to move it more to the left */
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  width: 61%; /* Adjusted size for the box */
+  height: 72%; /* Adjusted size for the box */
+  grid-gap: 0; /* No gap between grid items */
+  border: 1px solid  white;
+}
+
+.box.full {
+  grid-template-columns: 1fr;
+}
+
+.box.half {
+  grid-template-columns: 1fr 1fr;
+}
+
+.box.quarter {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.video1, .video2, .video3, .video4 {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* For 16:9 aspect ratio videos */
+  overflow: hidden;
+}
+
+.video1 video, .video2 video, .video3 video, .video4 video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Maintains aspect ratio within the container */
+}
+
+.overlay {
+  z-index: 999;
+}
+
+.Headerlist {
+  display: block;
+  max-height: 175px; 
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Style the scrollbar track (background) */
+.Headerlist::-webkit-scrollbar-track {
+background: #2f3542; /* Color of the scrollbar track */
+border-radius: 10px;
+}
+
+/* Style the scrollbar handle */
+.Headerlist::-webkit-scrollbar-thumb {
+background-color: #1e2129; /* Color of the scrollbar handle */
+border-radius: 10px;
+border: 3px solid #2f3542; /* Creates a border effect by matching the track color */
+}
+
+/* Handle on hover */
+.Headerlist::-webkit-scrollbar-thumb:hover {
+background: #454e5c; /* Slightly lighter shade on hover */
+}
+
+/* Style the scrollbar width */
+.Headerlist::-webkit-scrollbar {
+width: 12px; /* Width of the scrollbar */
+}
+
+@media (min-width: 400px) {
+  .box {
+    grid-template-columns: repeat(auto-fill, minmax(48%, 1fr));
+  }
+}
+
+.noCamera {
+  background-color: grey;
+  border-radius: 10px;
+  height: 20%;
+  width: 70%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.videotext {
+  font-size: large;
+  text-align: center;
+  color: #fff;
+  width: 100%;
+  background-color: grey;
+}
+
+/* Additional styling for the 'X' button */
+.box button {
+  background-color: #ccc;
+  border: none;
+  color: #fff;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Apply the 'noSpacing' class to the div elements */
+/* .div1, .div2, .div3, .div4 {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+} */
+
+.titlemain{
+  color: white;
+  text-align: center;
+  padding-top: 3rem;
+  font-size: 40px;
+}
+
+.buttoncontainer{
+  margin-top: 20%;
+  background-color: transparent;
+  
+}
+
+.button{
+  padding: 12px 14px;
+  font-size: 16px;
+  border-radius: 4px;
+  margin: 0 5px;
+  font-weight: bold;
+}
+
+.addbutton{
+  background-color: #04AA6D;
+  border: none;
+}
+
+
+.removebutton{
+  background-color: #f44336;
+  border: none;
+}
+
+.eventMonitoring{
+  position: fixed; 
+  right: 0;       
+  bottom: 0;   
+}
+.eventMonitoringHeader{
+  color: white;
+  font-size: larger;
+}
+
+.jsondiv{
+  padding: "100rem";
+  border: 1px solid red;
+}
+
+/* Notification Styling */
+
+.video-congested {
+  border: 3px solid red;
+}
+
+
+.noti {
+  background-color: #21252b; /* Changed from transparent for visibility */
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin-left: 16rem;
+  margin-top: 46rem; /* Reduced from 46rem for better accessibility */
+  height: 5rem;
+  width: 60rem;
+  margin-right: 1rem;
+  border-radius: 1rem;
+}
+
+.notiHeading {
+  font-size: 2rem;
+  margin: 0;
+  font-weight: bold;
+  background-color: #21252b;
+  padding-left: 2rem;
+}
+
+.dispatch, .ack {
+  background-color: #21252b;
+  font-weight: 500;
+  font-size: larger;
+  border: none;
+  border-radius: 0.5rem;
+  height: 3rem;
+  width: 9rem;
+}
+
+.dispatch {
+  background-color: red;
+  color: black;
+  margin-right: 1rem; /* Adjust this as needed */
+}
+
+.ack {
+  background-color: green;
+  color: black;
+  margin-right: 2rem; /* Keeps space to the right edge */
+}
+
+.noti-button-group {
+  background-color: #21252b;
+  display: flex;
+  justify-content: flex-end; /* Aligns buttons to the right */
+  align-items: center;
+  gap: 10px; /* Creates space between the buttons */
+}
