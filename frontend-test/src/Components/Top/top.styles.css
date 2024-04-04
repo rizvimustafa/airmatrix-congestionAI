@@ -1,0 +1,71 @@
+.top {
+  color: #ffffff; /* Light text color for contrast */
+  display: flex;
+  justify-content: space-between; /* Aligns children on opposite ends */
+  align-items: center; /* Vertically centers the children */
+  /* border: 1px solid white; */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  /* margin-left: 1%; */
+  margin-top:1%;
+  height: 1%;
+  width: 93.4%;
+  margin-right:0.75%;
+  background-color: #151517;
+  padding: 1.5rem 0.1rem;
+  position: fixed;
+  top: 0;
+  right: 0;
+border-radius: 8px;
+border: 1px solid #494949;
+
+/* border: 2px solid var(--Black-darkmode-widgetborders-003, #29292C); */
+/* background: var(--Black-darkmode-widgetsurface-002, #151517); */
+}
+
+h2 {
+  font-size: 1.5rem; /* Larger text for the dashboard title */
+  margin: 0; /* Removes default margin */
+  background-color: #151517;
+  padding-left: 1rem;
+  font-weight: 200;
+  
+}
+
+h6 {
+  margin: 0; /* Removes default margin */
+  font-weight: lighter; /* Lighter font weight for the date */
+  text-transform: uppercase; /* Uppercase styling for the date */
+  letter-spacing: 0.05em; /* Spacing between letters for aesthetics */
+  color: #cccccc; /* Slightly lighter text color for the date */
+  background-color: #151517;
+  padding-right: 1rem;
+  font-size: 1rem;
+  font-weight: 200;
+}
+
+.date{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* Aligns children on opposite ends */
+  align-items: center;
+  background-color: #151517;
+
+}
+
+.dateLineDiv {
+  margin-left: 10rem; /* This pushes the line icon to the far right */
+  background-color: #151517;
+
+}
+
+.rightSide {
+  display: flex;
+  align-items: center; /* This aligns the items vertically in the center */
+  background-color: #151517;
+
+}
+
+.dateLineDiv {
+  margin-left: 90rem;
+}
+

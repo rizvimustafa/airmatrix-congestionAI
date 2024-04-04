@@ -1,0 +1,55 @@
+.box {
+  background-color: #151517;
+  border: 1px solid #494949;
+  border-radius: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  justify-content: center;
+  margin-top: 1%;
+  position: fixed;
+  width: 70%;
+  top: 7.2rem;
+  left: 7.2rem;
+  height: 84.5%;
+  align-items: center;
+
+}
+
+/* Specific styling for two videos */
+.box.video-2 {
+  grid-template-columns: repeat(2, 1fr); /* Keeps two videos side by side */
+  grid-template-rows: 1fr; /* Single row */
+}
+.box.video-1 {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+
+
+.img {
+  margin-left: 25rem;
+  margin-top: 25rem;
+}
+
+
+
+
+.video-container {
+  /* flex: 1 1 45%; */
+  position: relative;
+  padding-bottom: 56.25%; 
+  height: 0;
+  overflow: hidden;
+  /* border: 1px solid green; */
+}
+
+.video-container video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}

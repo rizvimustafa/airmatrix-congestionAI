@@ -1,0 +1,123 @@
+.detectedDiv{
+background:  #151517;
+
+position: fixed;
+top: 6rem;
+right: 0.5rem;
+width: 22%;
+margin-right: 0.5%;
+height: fit-content;
+align-items: center;
+justify-content: center;
+border-radius: 12px;
+border: 1px solid #494949;
+}
+
+.headerandicon{
+    background:  #151517;
+    display: flex;
+    padding-left: 1rem;
+    padding-top: 0.6rem;
+
+}
+
+.title{
+    background:  #151517;
+    padding-left: 1rem;
+    font-weight: 500;
+    font-size: 1.5rem;
+
+}
+
+.congestionVideo{
+
+    background:  #151517;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
+  }
+
+.smallVideo {
+    
+    max-width: 65%; /* Adjust this value as needed */
+    height: auto; /* This ensures the height adjusts proportionally to the width, maintaining aspect ratio */
+    background:  #151517;
+    border-radius: 0.5rem;
+
+  }
+
+  .cameraNumber{
+    display: flex;
+    background:  #151517;
+    justify-content: space-between;
+    padding: 0rem 1rem;
+
+  }
+
+  .reportNumber{
+    display: flex;
+    background:  #151517;
+    justify-content: space-between;
+    padding: 0rem 1rem;
+
+  }
+
+  .congestionLocation{
+    display: flex;
+    background:  #151517;
+    justify-content: space-between;
+    padding: 0rem 1rem;
+
+  }
+
+  .congestionButtons{
+    margin-top: 1rem;
+    background:  #151517;
+
+  }
+  
+.details{
+    color: var(--Grey-darkmode-ghost-001, #9E9E9E);
+/* large */
+
+font-size: 0.8rem;
+font-style: normal;
+font-weight: 600;
+/* line-height: 28px; */
+}
+
+.descrip{
+    color: var(--White-lightmode-surface-001, #FAFCFF);
+
+    font-size: 0.8rem;
+font-style: normal;
+font-weight: 600;
+/* line-height: 28px;  */
+padding: 0.5rem 0rem;
+}
+
+.congestionButtons{
+    display: flex;
+    justify-content: space-between;
+    padding: 0rem 0.5rem;
+    padding-bottom: 0.5rem;
+
+}
+
+.dispatch{
+    color: black;
+    background-color: rgb(214, 48, 48);
+}
+
+.clean{
+  background-color: #151517;
+  border: 1px solid #494949;
+}
+
+.buttonss{
+    width: 12rem;
+    height: 2.5rem;
+}

@@ -1,0 +1,45 @@
+.DateDownloadDiv{
+  position: fixed;
+  top: 10%;
+  left: 73%;
+  height: 2rem;
+  border-radius: 8px;
+  /* padding: 0.5rem; */
+  padding-bottom: 1rem;
+  padding-left: 0.5%;
+  padding-right: 0.5%;
+  display: flex;
+  justify-content: space-between;
+  width: 30rem;
+}
+.leftSide{
+  border-radius: 0.5rem;
+  padding: 0rem 1rem;
+  background-color: #000000;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  border: 1px solid #494949;
+
+  height: 100%; 
+
+
+}
+.DateButton{
+  background-color: #000000;
+
+}
+
+.DownloadButton{
+  background-color: #42bb1d;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  height: 100%; 
+
+}
+.DownloadImage{
+  background-color: #42bb1d;
+  padding-right: 0.5rem;
+  
+}

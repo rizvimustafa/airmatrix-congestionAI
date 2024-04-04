@@ -1,0 +1,24 @@
+.lineChart{
+  position: fixed;
+  top: 42.5%;
+  left: 6%;
+  background-color: #151517;
+  border-radius: 8px;
+  border: 1px solid #494949;
+  padding: 14px;
+  width: 62rem;
+  height: 31rem;
+}
+
+.lineTitle{
+  background-color: #151517;
+  padding-left: 20px;
+  font-size: 24px;
+
+}
+
+.pictureLine{
+  height: 80%;
+  width: 90%;
+  padding-left: 2rem;
+}

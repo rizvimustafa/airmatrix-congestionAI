@@ -1,0 +1,30 @@
+.buttons1{
+    gap: 10px;
+    display: flex; /* This makes the container a flex container */
+    justify-content: center; /* This centers the buttons horizontally in the container */
+    position: fixed;
+    top: 5.5rem;
+    left: 7.2rem;
+}
+
+.editView{
+    display: inline-flex;
+    padding: 7px 14px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    background-color: #000000;
+    color: white;
+    border: 1px solid #494949;
+}
+
+.locations{
+    display: inline-flex;
+    padding: 7px 14px;
+justify-content: center;
+align-items: center;
+gap: 8px;
+background-color: #000000;
+    color: white;
+    border: 1px solid #494949;
+}

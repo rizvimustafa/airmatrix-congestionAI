@@ -1,0 +1,22 @@
+.AverageQueueDiv{
+  position: fixed;
+  top: 15%;
+  left: 42%;
+  background-color: #151517;
+  border-radius: 8px;
+border: 1px solid #494949;
+/* padding: 0.5rem; */
+padding: 14px;
+width: 18.6rem
+}
+
+.AverageQueueh3{
+  background-color: #151517;
+}
+
+.AverageQueueh1{
+  background-color: #151517;
+}
+.AverageQueueh5{
+  background-color: #151517;
+}

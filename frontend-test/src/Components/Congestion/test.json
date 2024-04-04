@@ -1,0 +1,12 @@
+
+  {
+      "success": true,
+      "data": {
+          "camera_number": 1,
+          "congestion_detected": true,
+          "congestion_level": "Heavy",
+          "detection_time": "14:30:00Z",
+          "expected_end_time": "15:00:00Z"
+      },
+      "error": null
+  }

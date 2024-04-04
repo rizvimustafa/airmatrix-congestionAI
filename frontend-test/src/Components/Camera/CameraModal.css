@@ -1,0 +1,103 @@
+*{
+  color: white;
+}
+.modal-container {
+  position: fixed;
+  top: 50%; /* Adjusted to shift the modal up */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #151517;
+  
+  padding: 10px;
+  height: fit-content;
+  font-size: smaller;
+  width: 20%;
+  border-radius: 8px;
+  border: 1px white solid;
+}
+
+.modal-content {
+  padding-left: 1rem;
+  padding-top: 1rem; /* Reduced top padding to shift content up */
+  background-color: #151517;
+
+
+}
+
+.formDiv {
+  padding-top: 0.5rem; /* Reduced to shift form fields up */
+  padding-right:0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: #151517;
+
+}
+
+.btn {
+  padding-top: 0.5rem; /* Adjust if necessary to reduce vertical spacing */
+  border-radius: 0.5rem;
+  margin-top: 0.5rem; /* Reduced to bring buttons closer to form fields */
+  background-color: #151517;
+
+}
+
+.label{
+  background-color: #151517;
+
+}
+
+.MonitorCheckbox {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5rem; /* Reduced to bring checkboxes closer to their label */
+  background-color: #151517;
+}
+
+.formBox{
+
+  background-color: #151517;
+
+}
+
+.dropDown{
+  background-color: #151517;
+}
+.cancel{
+  border: 1px solid #494949;
+}
+
+
+.paragraph{
+  background-color: #151517;
+
+}
+
+.buttons{
+  margin-left: 10.5rem;
+  display: flex;
+  justify-content: space-between;
+  background-color: #151517;
+
+}
+
+.addcamera{
+  background-color: green;
+}
+
+.dropDown{
+  width: 15rem;
+  height: 2rem;
+  background-color: #131314;
+  /* border-radius: 0.5rem;
+  padding-left: 0.5rem; */
+  color: #6c6c77;
+  
+}
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
