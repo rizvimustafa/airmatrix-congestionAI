@@ -7,8 +7,24 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from PIL import Image
 from ultralytics import YOLO
+from fastapi import FastAPI, File, Form, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 import supervision as sv
 import traceback
+import logging
+from config import (
+    CONFIDENCE_THRESHOLD,
+    IOU_THRESHOLD,
+    DIAGONAL_PERCENTAGE,
+    DURATION_THRESHOLD,
+    MIN_CARS_IN_CLUSTER,
+    CLUSTER_PROXIMITY_MULTIPLIER,
+    CONGESTION_RESPITE_TIME,
+    SOURCE_WEIGHTS_PATH
+)
+
+# Set up logging
+logging.basicConfig(filename='app.log', level=logging.ERROR)
 
 # Define the DetectionUtils class
 class DetectionUtils:
@@ -64,9 +80,9 @@ class DetectionUtils:
 
 video_processors = {}
 
-def get_video_processor(video_id, source_weights_path, res_width, res_height):
+def get_video_processor(video_id, res_width, res_height):
     if video_id not in video_processors:
-        video_processors[video_id] = VideoProcessor(video_id, source_weights_path, res_width, res_height)
+        video_processors[video_id] = VideoProcessor(video_id, res_width, res_height)
         print(f"New VideoProcessor added for video_id {video_id}. Current video processors: {video_processors}")
     return video_processors[video_id]
 
@@ -78,17 +94,10 @@ class VideoProcessor:
     CLASS_ID_TO_CLASS_NAME = ['bicycle', 'bus', 'car', 'motcycle', 'ped', 'truck', 'van']
     COLORS = sv.ColorPalette.default()
 
-    def __init__(self, video_id: str,
-                 source_weights_path: str,
-                 res_width: int,
-                 res_height: int, 
-                 confidence_threshold: float = 0.5, 
-                 iou_threshold: float = 0.7, 
-                 diagonal_percentage: float = 0.4,
-                 duration_threshold: int = 2, 
-                 min_cars_in_cluster: int = 8, 
-                 cluster_proximity_multiplier: float = 3,
-                 congestion_respite_time: int = 10):
+    def __init__(self, video_id: str, res_width: int, res_height: int, confidence_threshold: float = 0.5,
+                 iou_threshold: float = 0.7, diagonal_percentage: float = 0.4, duration_threshold: int = 5,
+                 min_cars_in_cluster: int = 8, cluster_proximity_multiplier: int = 3, congestion_respite_time: int = 10,
+                 source_weights_path: str = 'traffic-monitoring\\gvtd.pt'):
         self.video_id = video_id
         self.model = YOLO(source_weights_path)
         self.confidence_threshold = confidence_threshold
@@ -103,9 +112,9 @@ class VideoProcessor:
         self.duration_threshold = duration_threshold
         self.min_cars_in_cluster = min_cars_in_cluster
         self.cluster_proximity_multiplier = cluster_proximity_multiplier
-        self.congestion_flag = False # Flag to check if congestion is detected
-        self.post_congestion_frames = 0 # Duration after congestion is detected
-        self.congestion_respite_frames = congestion_respite_time 
+        self.congestion_flag = False
+        self.post_congestion_frames = 0
+        self.congestion_respite_frames = congestion_respite_time
         self.congestion_level = None
         self.congestion_cluster_size = 0
 
@@ -116,7 +125,7 @@ class VideoProcessor:
         return polygon, start_congestion_time, stop_congestion_time, self.congestion_flag
 
     def process_frame(self, frame: np.ndarray):
-        result = self.model(frame, verbose=False, conf=self.confidence_threshold, iou=self.iou_threshold, device="mps")[0]
+        result = self.model(frame, verbose=False, conf=self.confidence_threshold, iou=self.iou_threshold)[0]
         detections = sv.Detections.from_ultralytics(result)
         detections = self.tracker.update_with_detections(detections)
         print(detections.tracker_id)
@@ -135,17 +144,19 @@ class VideoProcessor:
                 start_congestion_time = datetime.now()
                 print(f"Congestion detected: Flag set to True at {start_congestion_time}")
                 self.congestion_flag = True
-                self.post_congestion_frames = 0
-            else:
-                self.post_congestion_frames = 0  # Reset the timer if congestion is still detected
+            self.post_congestion_frames = 0  # Reset the respite timer every time congestion is detected
         else:
-            if self.congestion_flag and self.post_congestion_frames < self.congestion_respite_frames:
-                self.post_congestion_frames += 1
-            elif self.congestion_flag:
-                self.congestion_flag = False
-                self.post_congestion_frames = 0
-                stop_congestion_time = datetime.now()
-                print(f"Congestion no longer detected: Flag reset to False at {stop_congestion_time}")
+            if self.congestion_flag:
+                if self.post_congestion_frames < self.congestion_respite_frames:
+                    self.post_congestion_frames += 1
+                else:
+                    self.congestion_flag = False
+                    self.post_congestion_frames = 0
+                    stop_congestion_time = datetime.now()
+                    print(f"Congestion no longer detected: Flag reset to False at {stop_congestion_time}")
+                    start_congestion_time = None  # Reset the start_congestion_time
+            else:
+                start_congestion_time = None  # Reset the start_congestion_time if no congestion is detected
 
         return annotated_frame, polygon, start_congestion_time, stop_congestion_time
     
@@ -169,20 +180,6 @@ class VideoProcessor:
 
         self.update_initial_positions(clusters, detections)
         stable_cars = self.check_position_stability(detections)
-
-        # Update the congestion flag and post-congestion frame counter
-        congestion_detected = any(len(cluster) >= self.min_cars_in_cluster and all(self.cluster_duration_tracker.get(tracker_id, 0) >= self.duration_threshold for tracker_id in cluster) for cluster in clusters)
-        
-        if congestion_detected:
-            if not self.congestion_flag:
-                current_time = datetime.now()
-                print(f"Congestion Flag set to True at {current_time}")
-            self.congestion_flag = True
-            self.post_congestion_frames = 0
-        else:
-            if self.congestion_flag:
-                # Increase the counter if congestion was detected previously
-                self.post_congestion_frames += 1
 
         annotated_frame, polygon = self.draw_cluster_boxes(annotated_frame, clusters, detections)
         return annotated_frame, polygon
@@ -249,31 +246,34 @@ class VideoProcessor:
             max_x, max_y = max(max_x, bbox[2]), max(max_y, bbox[3])
         return min_x, min_y, max_x, max_y
 
-# Initialize the Flask app
-app = Flask(__name__)
-CORS(app)
+# Initialize the FastAPI app
+app = FastAPI()
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Define the route to process frames
-@app.route('/process', methods=['POST'])
-def process_frame():
+@app.post("/process")
+async def process_frame(frame: UploadFile = File(...), video_id: str = Form(...), width: int = Form(...), height: int = Form(...)):
     try:
         # Extract the frame and additional information from the request
-        file = request.files['frame'].read()
+        file = await frame.read()
         image = Image.open(io.BytesIO(file))
-        video_id = request.form.get('video_id')
-        container_width = request.form.get('width')
-        container_height = request.form.get('height')
 
         # Convert the image for processing
         frame = np.array(image)
 
-        
         # Retrieve or create the VideoProcessor instance
         processor = get_video_processor(
             video_id,
-            source_weights_path='gvtd.pt',
-            res_width=container_width,
-            res_height=container_height,
+            res_width=width,
+            res_height=height,
         )
 
         # Unpack processed data from the processor
@@ -284,7 +284,6 @@ def process_frame():
             "success": True,
             "data": {
                 "video_id": video_id,
-                # "congestion_detected": processed_data.get("congestion_detected", False),
                 "congestion_start_time": start_congestion_time.isoformat() if start_congestion_time else None,
                 "congestion_stop_time": stop_congestion_time.isoformat() if stop_congestion_time else None,
                 "bounding_box": polygon.tolist() if polygon is not None else None,
@@ -293,19 +292,30 @@ def process_frame():
             },
             "error": None
         }
-        # print(response['data']['video_id'])
-        return jsonify(response)
+        return response
     except Exception as e:
-        # Capture and print the full traceback
-        error_info = traceback.format_exc()
-        print(error_info)
+        # Log the error
+        error_msg = f"Error processing frame for video_id: {video_id}"
+        logging.error(error_msg, exc_info=True)
 
-        # Return the full traceback in the response
-        return jsonify({"success": False, "data": None, "error": str(e)})
+        # Capture the full traceback
+        traceback_msg = traceback.format_exc()
+
+        # Return an error response
+        error_response = {
+            "success": False,
+            "data": None,
+            "error": {
+                "message": str(e),
+                "traceback": traceback_msg
+            }
+        }
+        return error_response
 
 if __name__ == '__main__':
-    app.run(debug=True, threaded=True)
+    import uvicorn
+    uvicorn.run(app, host='127.0.0.1', port=5000)
 
 
-# version 1
-# version 1
+# # version 2
+# # version 2
