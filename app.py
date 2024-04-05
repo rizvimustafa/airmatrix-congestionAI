@@ -1,10 +1,8 @@
 import numpy as np
 import cv2
-import json
+import torch
 import io
 from datetime import datetime
-from flask import Flask, request, jsonify
-from flask_cors import CORS
 from PIL import Image
 from ultralytics import YOLO
 from fastapi import FastAPI, File, Form, UploadFile
@@ -86,10 +84,8 @@ class VideoProcessor:
 
     def __init__(self, video_id: str, res_width: int, res_height: int, confidence_threshold: float = 0.5,
                  iou_threshold: float = 0.7, diagonal_percentage: float = 0.4, duration_threshold: int = 5,
-                 min_cars_in_cluster: int = 8, cluster_proximity_multiplier: int = 3, congestion_respite_time: int = 10,
-                 source_weights_path: str = 'traffic-monitoring\\gvtd.pt'):
+                 min_cars_in_cluster: int = 8, cluster_proximity_multiplier: int = 3, congestion_respite_time: int = 10):
         self.video_id = video_id
-        self.model = YOLO(source_weights_path)
         self.confidence_threshold = confidence_threshold
         self.iou_threshold = iou_threshold
         self.box_annotator = sv.BoxAnnotator(color=self.COLORS, thickness=0)
@@ -107,6 +103,15 @@ class VideoProcessor:
         self.congestion_respite_frames = congestion_respite_time
         self.congestion_level = None
         self.congestion_cluster_size = 0
+
+        # Check if CUDA is available
+        if torch.cuda.is_available():
+            self.model = YOLO("ground-traffic-model.pt")
+            print("Using GPU for inference")
+        else:
+            self.model = YOLO("ground-traffic-model.onnx")
+            print("Using CPU for inference")
+
 
     def process_video(self, frame: np.ndarray):
         processed_frame, polygon, start_congestion_time, stop_congestion_time = self.process_frame(frame)
@@ -309,3 +314,5 @@ if __name__ == '__main__':
 
 # # version 2
 # # version 2
+
+
