@@ -11,7 +11,7 @@ function VideoPlayerTest() {
   const selectedVideosCount = videoSelections.filter(Boolean).length;
   const videoSources = [
     `${process.env.PUBLIC_URL}/vid1.mp4`,
-    `${process.env.PUBLIC_URL}/vid2.mp4`,
+    `${process.env.PUBLIC_URL}/vid5.mp4`,
     `${process.env.PUBLIC_URL}/test_4.mp4`,
     `${process.env.PUBLIC_URL}/vid3.mp4`
   ];

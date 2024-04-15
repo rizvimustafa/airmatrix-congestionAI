@@ -1,5 +1,9 @@
+import os 
+os.system("pip install ultralytics")
+os.system("pip install supervision")
 import numpy as np
 import cv2
+
 import torch
 import io
 from datetime import datetime
