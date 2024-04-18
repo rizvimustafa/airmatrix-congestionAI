@@ -43,7 +43,7 @@ function VideoFrameSender({ videoElement, containerSize, videoId }) {
       console.log("CONTAINER HEIGHT : " + Math.round(containerSize.height));
 
 
-      fetch('http://localhost:5000/process', {
+      fetch('http://3.97.2.158:5000/process', {
         method: 'POST',
         body: formData,
       })

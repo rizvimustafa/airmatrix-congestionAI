@@ -173,25 +173,6 @@ backend-test/
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
-FE/itsdashboard/node_modules
-FE/itsdashboard/.pnp
-FE/itsdashboard/.pnp.js
-
-# testing
-FE/itsdashboard/coverage
-
-# production
-FE/itsdashboard/build
-
-# misc
-FE/itsdashboard/.DS_Store
-FE/itsdashboard/.env.local
-FE/itsdashboard/.env.development.local
-FE/itsdashboard/.env.test.local
-FE/itsdashboard/.env.production.local
-
-FE/itsdashboard/npm-debug.log*
-FE/itsdashboard/yarn-debug.log*
-FE/itsdashboard/yarn-error.log*
+*.gz
+*.tar
 

@@ -1,9 +1,6 @@
 import os 
-os.system("pip install ultralytics")
-os.system("pip install supervision")
 import numpy as np
 import cv2
-
 import torch
 import io
 from datetime import datetime
@@ -14,6 +11,8 @@ from fastapi.middleware.cors import CORSMiddleware
 import supervision as sv
 import traceback
 import logging
+import asyncio
+from asyncio import Task
 
 # Set up logging
 logging.basicConfig(filename='app.log', level=logging.ERROR)
@@ -72,11 +71,30 @@ class DetectionUtils:
 
 video_processors = {}
 
+async def periodic_cleanup(interval: int = 60):
+    while True:
+        await asyncio.sleep(interval)
+        remove_inactive_processors()
+
 def get_video_processor(video_id, res_width, res_height):
     if video_id not in video_processors:
         video_processors[video_id] = VideoProcessor(video_id, res_width, res_height)
         print(f"New VideoProcessor added for video_id {video_id}. Current video processors: {video_processors}")
     return video_processors[video_id]
+
+def remove_inactive_processors(inactive_timeout: int = 60):
+    current_time = datetime.now()
+    inactive_processors = []
+    
+    for video_id, processor in video_processors.items():
+        time_since_last_processed = (current_time - processor.last_processed_time).total_seconds()
+        if time_since_last_processed > inactive_timeout:
+            inactive_processors.append(video_id)
+    
+    for video_id in inactive_processors:
+        del video_processors[video_id]
+        print(f"Removed inactive processor for video_id {video_id}")
+
 
 
 # Define the VideoProcessor class
@@ -107,17 +125,19 @@ class VideoProcessor:
         self.congestion_respite_frames = congestion_respite_time
         self.congestion_level = None
         self.congestion_cluster_size = 0
+        self.last_processed_time = datetime.now()
 
         # Check if CUDA is available
         if torch.cuda.is_available():
             self.model = YOLO("ground-traffic-model.pt")
             print("Using GPU for inference")
         else:
-            self.model = YOLO("ground-traffic-model.onnx")
+            self.model = YOLO("ground-traffic-model.onnx", task='detect')
             print("Using CPU for inference")
 
 
     def process_video(self, frame: np.ndarray):
+        self.last_processed_time = datetime.now()
         processed_frame, polygon, start_congestion_time, stop_congestion_time = self.process_frame(frame)
         # cv2.imshow("frame", processed_frame)
         self.set_congestion_level()  # Set the congestion level based on cluster size
@@ -257,6 +277,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+cleanup_task = None
+
+@app.on_event("startup")
+async def startup_event():
+    global cleanup_task
+    cleanup_task = asyncio.create_task(periodic_cleanup())
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    if cleanup_task is not None:
+        cleanup_task.cancel()
+        await cleanup_task
+
 # Define the route to process frames
 @app.post("/process")
 async def process_frame(frame: UploadFile = File(...), video_id: str = Form(...), width: int = Form(...), height: int = Form(...)):
@@ -264,6 +297,7 @@ async def process_frame(frame: UploadFile = File(...), video_id: str = Form(...)
         # Extract the frame and additional information from the request
         file = await frame.read()
         image = Image.open(io.BytesIO(file))
+
 
         # Convert the image for processing
         frame = np.array(image)

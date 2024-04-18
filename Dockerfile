@@ -5,12 +5,22 @@ FROM python:3.12.2-slim
 WORKDIR /code
 
 # Install OpenGL libraries needed by OpenCV (cv2)
-RUN apt-get update && apt-get install -y libgl1-mesa-glx && rm -rf /var/lib/apt/lists/*
+# Install necessary system dependencies
+RUN apt-get update && apt-get install -y \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libgl1-mesa-glx && \
+    rm -rf /var/lib/apt/lists/*
 
 # Copy the current directory contents into the container at /code
-COPY ./requirements.txt /code/requirements.txt
+COPY ./docker-requirements.txt /code/requirements.txt
 COPY ./ground-traffic-model.onnx /code/ground-traffic-model.onnx
 COPY ./ground-traffic-model.pt /code/ground-traffic-model.pt
+
+# Install PyTorch separately with the required extra index URL
+RUN pip install --no-cache-dir --upgrade --extra-index-url https://download.pytorch.org/whl/cpu torch torchvision
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
