@@ -1,40 +1,47 @@
+// Import React library and its hooks, and include the component-specific stylesheet.
 import React, { useEffect, useState } from 'react';
 import './EventsMonitoring.css';
+// Import the custom hook from the dataContext to access shared data.
 import { useData } from '../../send-backend/dataContext';
 
 const EventsMonitoring = () => {
+  // State to store event data.
   const [events, setEvents] = useState([]);
-  const { responseData } = useData(); // Assuming this provides the data correctly
+  // Destructure responseData from the context which holds response from a backend or service.
+  const { responseData } = useData(); 
 
-  
   useEffect(() => {
+    // Log the current response data for debugging.
     console.log("Response Data:", responseData); 
-  
+
+    // Process the response data if it exists and indicates a successful operation.
     if (responseData && responseData.success) {
+      // Construct a new event object based on the response data.
       const newEvent = {
         camera: responseData.data.video_id,
         congType: responseData.data.is_congestion ? 'Yes' : 'No',
         start: responseData.data.congestion_start_time,
         end: responseData.data.congestion_stop_time,
       };
-  
-      console.log("New Event:", newEvent); // Debugging line to verify the new event
-  
-      // Check if congType is 'no' and remove the event with the corresponding camera ID
+
+      // Log the new event for debugging purposes.
+      console.log("New Event:", newEvent); 
+
+      // Conditional logic based on the congestion status.
       if (newEvent.congType === 'No') {
+        // If there is no congestion, filter out the event related to this camera from the events state.
         setEvents(prevEvents => prevEvents.filter(event => event.camera !== newEvent.camera));
       } else {
-        // Check if an event with the same camera ID already exists
+        // If there is congestion, check if an event for this camera already exists.
         if (!events.some(event => event.camera === newEvent.camera)) {
-          // If not, add the new event to the existing events
+          // If not, add the new event to the events state.
           setEvents(prevEvents => [...prevEvents, newEvent]);
         }
       }
     }
-  }, [responseData, events]); // Include events in the dependency array
-  
-  
+  }, [responseData, events]); // Dependencies for useEffect include responseData and events to handle updates correctly.
 
+  // Render the component with a structured layout of events data.
   return (
     <section>
       <div className="events-monitoring">
@@ -65,5 +72,6 @@ const EventsMonitoring = () => {
   );
 };
 
+// Export the EventsMonitoring component to be used in other parts of the application.
 export default EventsMonitoring;
 
