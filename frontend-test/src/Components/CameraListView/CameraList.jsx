@@ -1,3 +1,4 @@
+// Importing React, necessary hooks, styles, and other components.
 import React, { useState, useEffect } from 'react';
 import './CameraList.css';
 import img from './trash-2.svg';
@@ -5,61 +6,56 @@ import cameraicon from './wall-camare.svg';
 import AddCameraModal from "../Camera/CameraModal";
 import greencircle from './greencircle.png';
 import redcircle from './redcircle.png';
-
-import {useData} from '../../send-backend/dataContext';
-import CongTest from '../Congestion/congTest'
+import { useData } from '../../send-backend/dataContext';
+import CongTest from '../Congestion/congTest';
 
 function CameraList() {
+  // State variables to manage UI states and camera list data.
   const [showAddCamera, setShowAddCamera] = useState(false);
   const [rows, setRows] = useState([]);
   const [allChecked, setAllChecked] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [isCongested, setIsCongested] = useState(false);
 
+  // Using a custom hook from the context to manage video selections and retrieve congestion data.
   const { setVideoSelections, responseData, checkCong, cong } = useData();
-  
 
   useEffect(() => {
-    // Define a function that checks `responseData`
+    // Check response data periodically for changes, particularly looking at congestion data.
     const checkResponse = () => {
-      if (responseData) { // Check if responseData is not null or undefined
+      if (responseData) {
         responseData.success ? checkCong(true) : checkCong(false);
       }
     };
-  
-    // Set a timeout to delay the check
-    const timeoutId = setTimeout(checkResponse, 5000); // 5000 milliseconds = 5 seconds
-  
-    // Clean up the timeout if the component unmounts before the timeout is complete
-    // or if the `responseData` changes before the timeout is complete.
+    const timeoutId = setTimeout(checkResponse, 5000); // Check every 5 seconds
     return () => clearTimeout(timeoutId);
-  
-  }, [responseData]); // Depend on `responseData` so the effect runs when it changes
-  
-  
+  }, [responseData]);
 
+  // Toggles the visibility of the add camera modal.
   const toggleAddCamera = () => {
     setShowAddCamera(!showAddCamera);
   };
-  
+
+  // Toggles the checkbox state of all camera entries.
   const toggleAllCheckbox = () => {
     const newAllChecked = !allChecked;
-    setAllChecked(newAllChecked); // Toggle the global checked state
-
-    // Update videoSelections to play/pause all videos based on the new allChecked state
-    setVideoSelections(rows.map(() => newAllChecked)); // Set all videos to the new allChecked state
-
+    setAllChecked(newAllChecked);
+    setVideoSelections(rows.map(() => newAllChecked));
     const updatedRows = rows.map(row => ({ ...row, isChecked: newAllChecked }));
-    setRows(updatedRows); // Apply the toggled state to all rows
-};
+    setRows(updatedRows);
+  };
 
+  // Toggles the visibility of delete option.
   const toggleShowDelete = () => {
     setShowDelete(!showDelete);
   };
+
+  // Deletes a camera row by ID.
   const deleteRow = (id) => {
     setRows(rows.filter(row => row.id !== id));
   };
 
+  // Pre-defined list of intersections as possible camera locations.
   const intersections = [
     "Dixie & Dundas",
     "King & Spadina",
@@ -73,61 +69,58 @@ function CameraList() {
     "Cedar & Pine"
   ];
 
+  // Randomly selects an intersection for a new camera.
   const getRandomIntersection = () => {
-    // Get a random index based on the length of the intersections array
     const randomIndex = Math.floor(Math.random() * intersections.length);
-    // Return the intersection name at the random index
     return intersections[randomIndex];
   };
 
+  // Adds a new camera to the list with given camera data.
   const addCamera = (cameraData) => {
-    // Convert monitor array to a comma-separated string if necessary
     const monitorString = cameraData.monitor.join(', ');
-  
     const newCamera = {
       id: rows.length + 1,
       ...cameraData,
-      monitor: monitorString, // Use the converted string
+      monitor: monitorString,
       isChecked: false,
       showVideo: false,
       intersection: getRandomIntersection(),
     };
-  
     setRows(rows => [...rows, newCamera]);
     toggleAddCamera();
   };
 
+  // Toggles a checkbox for a specific camera row.
   const {toggleVideo} = useData();
-  
   const toggleCheckbox = (id) => {
-    const updatedRows = rows.map((row, index) => {
+    const updatedRows = rows.map((row) => {
       if (row.id === id) {
-        toggleVideo(index); // Toggle the selection in the context based on the row index
+        toggleVideo(rows.indexOf(row));
         return { ...row, isChecked: !row.isChecked };
       }
       return row;
     });
     setRows(updatedRows);
   };
+
+  // Log the current state of rows for debugging.
   console.log(rows); 
 
-
+  // Render the component, including conditional rendering based on the congestion state.
   return (
     <>
-    {cong && <CongTest cameraRows={rows}/>}
-    <div className='eventBox' style={{ height: cong ? '42%' : '89%' }}>
-      <div className='heading'>
-        <h3 className='title'>Camera Monitoring List</h3>
-        <img className='trashimg' onClick={toggleShowDelete} src={img} alt="" />
-      </div>
+      {cong && <CongTest cameraRows={rows}/>}
+      <div className='eventBox' style={{ height: cong ? '42%' : '89%' }}>
+        <div className='heading'>
+          <h3 className='title'>Camera Monitoring List</h3>
+          <img className='trashimg' onClick={toggleShowDelete} src={img} alt="" />
+        </div>
         <table className="table-container" style={{ height: cong ? '50%' : '80%' }}>
           <thead>
             <tr className="camera-header">
               <th>
                 <label className="header-item">
-                  <input type="checkbox" className="camera-checkbox"
-                        checked={allChecked}
-                        onChange={toggleAllCheckbox} />
+                  <input type="checkbox" checked={allChecked} onChange={toggleAllCheckbox} />
                   Camera
                 </label>
               </th>
@@ -148,12 +141,7 @@ function CameraList() {
               rows.map((row) => (
                 <tr key={row.id}>
                   <td>
-                    <input 
-                      type="checkbox" 
-                      className="camera-checkbox" 
-                      checked={row.isChecked}
-                      onChange={() => toggleCheckbox(row.id)}
-                    />
+                    <input type="checkbox" checked={row.isChecked} onChange={() => toggleCheckbox(row.id)} />
                     <img src={row.isChecked ? greencircle : redcircle} alt="" style={{width: '10px', height: '10px', marginRight: '5px'}} />
                     {`Camera ${row.camera}`}
                   </td>
@@ -161,7 +149,7 @@ function CameraList() {
                   <td>{row.intersection}</td>
                   {showDelete && (
                     <td>
-                      <button className='-Button' onClick={() => deleteRow(row.id)}> − </button>
+                      <button onClick={() => deleteRow(row.id)}> − </button>
                     </td>
                   )}
                 </tr>
@@ -169,18 +157,19 @@ function CameraList() {
             )}
           </tbody>
         </table>
-      <div className='buttons2'>
-        <button className='connectCamera'>Connect Camera</button>
-        <button onClick={toggleAddCamera} className='addCamera'>Add Camera</button>
-        {showAddCamera && (
-          <div className='overlay'>
-            <AddCameraModal addCamera={addCamera} onClose={toggleAddCamera} />
-          </div>
-        )}
+        <div className='buttons2'>
+          <button className='connectCamera'>Connect Camera</button>
+          <button onClick={toggleAddCamera} className='addCamera'>Add Camera</button>
+          {showAddCamera && (
+            <div className='overlay'>
+              <AddCameraModal addCamera={addCamera} onClose={toggleAddCamera} />
+            </div>
+          )}
+        </div>
       </div>
-    </div>
     </>
   );
 }
 
+// Export the CameraList component for use in other parts of the application.
 export default CameraList;
